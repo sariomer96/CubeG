@@ -35,7 +35,7 @@ public class CharacterController : MonoBehaviour
         if (other.tag=="cube")
         {
             print("hit");
-            posZ += 10;
+            posZ += 7;
             for (int i = 0; i < 15; i++)
             {
                 GameObject pooledObj = ObjectPool._instance.GetPooledObject(0);
