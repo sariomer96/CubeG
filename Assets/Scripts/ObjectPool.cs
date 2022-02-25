@@ -11,11 +11,41 @@ public class ObjectPool : MonoBehaviour
         public Queue<GameObject> pooledObjects;
         public GameObject objectPrefab;
         public int poolSize;
+        public int activeObjectCount;
+        public Vector3 objectPos;
+        public float posZ,posY,posX;
+        public float randXMin, randXMax;
+        
+        public float incDist;
     }
     public static ObjectPool _instance;
+
     [SerializeField] private Pool[] pools = null;
     // Start is called before the first frame update
 
+
+    public Vector3 GetPos(int type)
+    {
+        pools[type].objectPos = new Vector3(pools[type].posX, pools[type].posY, pools[type].posZ);
+        return pools[type].objectPos;
+    }
+    public void GetRandomX(int type)
+    {
+       
+       float rand = UnityEngine.Random.RandomRange(pools[type].randXMin, pools[type].randXMax);
+       pools[type].posX = rand;
+
+    }
+   
+
+    
+    
+    public void IncreasePosZ(int type)
+    {
+        pools[type].posZ += pools[type].incDist;
+        
+
+    }
     private void Awake()
     {
         _instance = this;
@@ -31,7 +61,18 @@ public class ObjectPool : MonoBehaviour
             }
         }
     }
-
+    public int GetActiveObjCount(int objType)
+    {
+        return pools[objType].activeObjectCount;
+    }
+    public int GetPoolTypeCount()
+    {
+        return pools.Length;
+    }
+    public int GetPoolSize(int poolType)
+    {
+        return pools[poolType].poolSize;
+    }
     public GameObject GetPooledObject(int objType)
     {
         if (objType>=pools.Length)
@@ -39,7 +80,6 @@ public class ObjectPool : MonoBehaviour
             return null;
         }
      
-
      
         GameObject obj = pools[objType].pooledObjects.Dequeue();
         obj.SetActive(true);
