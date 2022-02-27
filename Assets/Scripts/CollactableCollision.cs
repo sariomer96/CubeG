@@ -7,7 +7,7 @@ public class CollactableCollision : MonoBehaviour
    
     private void OnCollisionEnter(Collision other)
     {
-        if (other.transform.tag=="obstacle")
+        if (other.transform.tag!=transform.tag)
         {
             transform.gameObject.SetActive(false);
         }

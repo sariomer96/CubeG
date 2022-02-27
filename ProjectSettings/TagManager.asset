@@ -7,6 +7,8 @@ TagManager:
   - Missile
   - cube
   - obstacle
+  - diamonds
+  - diamondsYellow
   layers:
   - Default
   - TransparentFX

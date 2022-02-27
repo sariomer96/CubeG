@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] float maxSwerve = 0.03f;
+    [SerializeField] Transform _player;
+    private int _money;
+    public int Money { get { return _money; } set { _money = value; } }
+    public bool canSwerve = true;
+    [SerializeField] float maxSwerve = 1f;
     int triggerCounter = 0;
-    [SerializeField] float _speed;
+    [SerializeField] private float _speed;
+   
+    [SerializeField] private int _diamondsCount;
+    public float Speed { get { return _speed; } set { _speed = value; } }
+    public int DiamondsCount { get { return _diamondsCount; } set { _diamondsCount = value; } }
     [SerializeField] Vector3 move;
     [SerializeField] float poolTriggerZ;
     ObjectPool objPool;
@@ -14,66 +22,92 @@ public class CharacterController : MonoBehaviour
     int poolSize = 0;
     int activeObjCount = 0;
     int typeCount = 0;
-    float lastMousePosition;
-    float deltaMousePosition;
-    Vector2 currentMousePosition;
+    [SerializeField] private Animator _anim;
+   
+    float swerveAmount;
+    float lastPosX;
+    float moveX;
+    private string _idleAnim = "idle";
+    public static CharacterController _instance;
+    [SerializeField] float swerveSpeed = 5;
+    [SerializeField] float ClampX;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
+    public void SetSpeed(float speed)
+    {
+        Speed = speed;
+    }
+    
     // Start is called before the first frame update
     void Start()
     {
+      
+        _anim.Play(_idleAnim);
         objPool = ObjectPool._instance;
         typeCount = objPool.GetPoolTypeCount();
-        
+       
         rb = transform.GetComponent<Rigidbody>();
 
         ObjectCreate();
 
 
     }
-   
+    public Animator GetAnim()
+    {
+        return _anim;
+    }
+   void CharacterMove()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+
+            lastPosX = Input.mousePosition.x;
+
+
+        }
+
+        else if (Input.GetMouseButton(0))
+        {
+
+            moveX = Input.mousePosition.x - lastPosX;
+
+            lastPosX = Input.mousePosition.x;
+
+
+        }
+
+        else if (Input.GetMouseButtonUp(0))
+        {
+            moveX = 0f;
+
+        }
+        if (canSwerve==true)
+        {
+            float swerveAmount = moveX * Time.deltaTime * swerveSpeed;
+
+
+           
+
+            transform.Translate(swerveAmount, 0, _speed * Time.deltaTime);
+
+
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -ClampX, ClampX), transform.position.y, transform.position.z);
+        }
+       
+
+    }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector2 prevMousePosition = Input.mousePosition;
-                
-                lastMousePosition += prevMousePosition.x;
-               
-            }
+        CharacterMove();
+        
 
 
-            if (Input.GetMouseButton(0))
-            {
-                 currentMousePosition =Input.mousePosition;
-              
-          
-            }
-              deltaMousePosition  = lastMousePosition - currentMousePosition.x;
-     
-
-            float swerveAmount = -deltaMousePosition*Time.deltaTime*500;
-
-            swerveAmount = Mathf.Clamp(swerveAmount, -maxSwerve, maxSwerve);
-            //transform.Translate(swerveAmount, 0, 0);
-            rb.velocity = new Vector3(-swerveAmount,0,move.z*_speed);
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -2.3f, 2.3f), transform.position.y, transform.position.z);
-        }
-       
-        if (Input.GetMouseButtonUp(0))
-        {
-            deltaMousePosition = 0;
-            lastMousePosition = 0;
-
-        }
-
-
-        ////rb.velocity = new Vector3((-(deltaMousePosition)) * Time.fixedDeltaTime, 0, 1);
-        //rb.velocity = move * _speed;
-        rb.velocity= move * _speed;
     }
-
+   
     void ObjectCreate()
     {
         typeCount = objPool.GetPoolTypeCount();
@@ -109,7 +143,6 @@ public class CharacterController : MonoBehaviour
                 other.transform.position = new Vector3(other.transform.position.x, other.transform.position.y, poolTriggerZ);
             }
 
-         
       
             for (int i = 0; i <typeCount; i++)
             {

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5234700230988302049}
   m_Layer: 0
   m_Name: Diamond
-  m_TagString: Untagged
+  m_TagString: diamonds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,7 +111,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 116
+  m_Constraints: 118
   m_CollisionDetection: 1
 --- !u!114 &5234700230988302049
 MonoBehaviour:
