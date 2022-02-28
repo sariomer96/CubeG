@@ -61,13 +61,19 @@ public class CharacterCollisions : MonoBehaviour
         if (other.tag=="Finish")
         {
             uiController.WinUi();
-            characterController.Money = characterController.DiamondsCount;
-            PlayerPrefs.SetInt("money", characterController.Money);
-            print(characterController.Money);
-            isFinished = true;
+            int getMoney = PlayerPrefs.GetInt("money");
+            CoinStatus._instance.Money = characterController.DiamondsCount;
+            PlayerPrefs.SetInt("money", getMoney + CoinStatus._instance.Money);
+            int totalMoney = PlayerPrefs.GetInt("money");
+            CoinStatus._instance.moneyTxt.text = CoinStatus._instance.totalCoin+ totalMoney.ToString();
+
+
+           isFinished = true;
             characterController.SetSpeed(0);
             characterController.canSwerve = false;
             characterController.GetAnim().SetBool("isWin", true);
+          
+
         }
     }
     private void OnTriggerEnter(Collider other)

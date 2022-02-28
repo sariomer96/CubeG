@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour
 {
+
     [SerializeField] Transform _player;
-    private int _money;
-    public int Money { get { return _money; } set { _money = value; } }
+
     public bool canSwerve = true;
     [SerializeField] float maxSwerve = 1f;
     int triggerCounter = 0;
@@ -55,6 +56,7 @@ public class CharacterController : MonoBehaviour
 
 
     }
+  
     public Animator GetAnim()
     {
         return _anim;
@@ -84,7 +86,7 @@ public class CharacterController : MonoBehaviour
             moveX = 0f;
 
         }
-        if (canSwerve==true)
+        if (canSwerve==true&&GameManager._instance._isStart==true)
         {
             float swerveAmount = moveX * Time.deltaTime * swerveSpeed;
 

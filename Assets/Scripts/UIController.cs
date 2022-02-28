@@ -20,8 +20,10 @@ public class UIController : MonoBehaviour
         _panel.SetActive(true);
         win.SetActive(true);
     }
-    public void ClickFinish()
+    public void ClickFinish() // load  scene onClick
     {
+        LevelStatus._instance.CurrentLevel++;
+        PlayerPrefs.SetInt("currentLevel", LevelStatus._instance.CurrentLevel);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     // Update is called once per frame
