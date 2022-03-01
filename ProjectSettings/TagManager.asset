@@ -9,6 +9,7 @@ TagManager:
   - obstacle
   - diamonds
   - diamondsYellow
+  - improveBtn
   layers:
   - Default
   - TransparentFX

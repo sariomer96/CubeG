@@ -11,17 +11,24 @@ public class CharacterCollisions : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] Vector3 finishCamPos;
     [SerializeField] Vector3 finishCamRot;
-    [SerializeField] Text _healthTxt,_remainingTxt;
+    [SerializeField] public Text _healthTxt,_remainingTxt;
     int _remaining = 3;
     CharacterController characterController;
     [SerializeField] private int _health = 3;
+    public int Health { get { return _health; } set { _health = value; } }
     private int _diamondsValueBlue = 1;
     private int _diamondsValueYellow = 2;
-
+    public static CharacterCollisions _instance;
     Events _events;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
+        _health = PlayerPrefs.GetInt("health", 3);
         _healthTxt.text = _health.ToString();
        _events = Events._instance;
         characterController = CharacterController._instance;
@@ -45,12 +52,15 @@ public class CharacterCollisions : MonoBehaviour
     }
     private void HealthDecrease()
     {
+       
+
         if (_health>0)
         {
             _health--;
             _healthTxt.text = _health.ToString();
+      
         }
-        
+     
     }
     private void OnCollectDiamonds(int diamondsValue)
     {

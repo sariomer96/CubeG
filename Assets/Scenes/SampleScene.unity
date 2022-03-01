@@ -520,7 +520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4015777057310070516, guid: 7d3e4c1cfc540914dacbb48f74b888cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ClickFinish
+      value: Restart
       objectReference: {fileID: 0}
     - target: {fileID: 4015777057310070516, guid: 7d3e4c1cfc540914dacbb48f74b888cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -741,7 +741,7 @@ GameObject:
   - component: {fileID: 433300886}
   - component: {fileID: 433300885}
   m_Layer: 5
-  m_Name: Text
+  m_Name: earn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1131,7 +1131,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4015777057310070516, guid: 7d3e4c1cfc540914dacbb48f74b888cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ClickFinish
+      value: ClickFinishLevelUp
       objectReference: {fileID: 0}
     - target: {fileID: 4015777057310070516, guid: 7d3e4c1cfc540914dacbb48f74b888cc, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1327,13 +1327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c35f1853b419b428f757651693709f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCam: {fileID: 0}
-  lastMousePos: {x: 0, y: 0, z: 0}
-  mousePos: {x: 0, y: 0, z: 0}
-  newPos: {x: 0, y: 0, z: 0}
-  _speed: 10
-  _swipeSpeed: 5
-  rb: {fileID: 0}
 --- !u!1 &802443797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,8 +1341,8 @@ GameObject:
   - component: {fileID: 802443800}
   - component: {fileID: 802443799}
   m_Layer: 5
-  m_Name: NextBtn (1)
-  m_TagString: Untagged
+  m_Name: EARNBTN
+  m_TagString: improveBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1433,7 +1426,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 802443801}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1243598838}
+        m_TargetAssemblyTypeName: Improve, Assembly-CSharp
+        m_MethodName: BuyImproving
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: earningMoney
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &802443801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2181,7 +2186,7 @@ GameObject:
   - component: {fileID: 1230322197}
   - component: {fileID: 1230322196}
   m_Layer: 5
-  m_Name: health
+  m_Name: earn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2379,13 +2384,14 @@ GameObject:
   - component: {fileID: 1243598835}
   - component: {fileID: 1243598837}
   - component: {fileID: 1243598836}
+  - component: {fileID: 1243598838}
   m_Layer: 5
   m_Name: DevelopmentPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1243598835
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2448,6 +2454,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1243598834}
   m_CullTransparentMesh: 1
+--- !u!114 &1243598838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243598834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90449b7d167c2742a03b5411cbc2957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healthMoney: 10
+  _healthMoneyTxt: {fileID: 4015777058289387477}
+  _healthMButton: {fileID: 4015777057326853624}
+  _earningMoney: 10
+  _earningMoneyTxt: {fileID: 433300885}
+  _earnMButton: {fileID: 802443800}
 --- !u!1001 &1272317994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4236,7 +4260,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4015777057326853623}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1243598838}
+        m_TargetAssemblyTypeName: Improve, Assembly-CSharp
+        m_MethodName: BuyImproving
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: healthMoney
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1243598838}
+        m_TargetAssemblyTypeName: Improve, Assembly-CSharp
+        m_MethodName: HealthIncrease
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &4015777057326853625
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4272,8 +4320,8 @@ GameObject:
   - component: {fileID: 4015777057326853624}
   - component: {fileID: 4015777057326853627}
   m_Layer: 5
-  m_Name: NextBtn
-  m_TagString: Untagged
+  m_Name: HEALTHBTN
+  m_TagString: improveBtn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4366,7 +4414,7 @@ GameObject:
   - component: {fileID: 4015777058289387476}
   - component: {fileID: 4015777058289387477}
   m_Layer: 5
-  m_Name: Text
+  m_Name: health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

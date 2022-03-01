@@ -14,10 +14,13 @@ public class CoinStatus : MonoBehaviour
     void Awake()
     {
         _instance = this;
-        int totalMoney= PlayerPrefs.GetInt("money",0);
-
-        moneyTxt.text= totalCoin + totalMoney.ToString();
+        MoneyToString();
     }
 
+    public void MoneyToString()
+    {
+        int totalMoney = PlayerPrefs.GetInt("money", 0);
 
+        moneyTxt.text = totalCoin + totalMoney.ToString();
+    }
 }

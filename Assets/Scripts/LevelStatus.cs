@@ -15,7 +15,7 @@ public class LevelStatus : MonoBehaviour
 
     private void Awake()
     {
-        //PlayerPrefs.DeleteAll();      
+        //PlayerPrefs.DeleteAll();
         _instance = this;
     }
     private void Start()
