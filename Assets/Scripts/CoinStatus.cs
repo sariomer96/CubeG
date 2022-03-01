@@ -13,6 +13,7 @@ public class CoinStatus : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         _instance = this;
         MoneyToString();
     }

@@ -78,6 +78,16 @@ public class Improve : MonoBehaviour
         CharacterCollisions._instance.Health = health;
         CharacterCollisions._instance._healthTxt.text = health.ToString();
     }
+    public void DiamondsValueIncrease()
+    {
+        int diaBlue=PlayerPrefs.GetInt("diaBlue", 1);
+        diaBlue *= 2;
+        int diaYellow=PlayerPrefs.GetInt("diaYellow", 2);
+        diaYellow *= 2;
+
+        PlayerPrefs.SetInt("diaBlue", diaBlue);
+        PlayerPrefs.SetInt("diaYellow", diaYellow);
+    }
     private void Update()
     {
       

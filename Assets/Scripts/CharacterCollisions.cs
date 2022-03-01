@@ -16,8 +16,11 @@ public class CharacterCollisions : MonoBehaviour
     CharacterController characterController;
     [SerializeField] private int _health = 3;
     public int Health { get { return _health; } set { _health = value; } }
-    private int _diamondsValueBlue = 1;
-    private int _diamondsValueYellow = 2;
+
+    [SerializeField] private int _diamondsValueBlue = 1;
+    [SerializeField] private int _diamondsValueYellow = 2;
+    public int DiaValueBlue { get { return _diamondsValueBlue; } set { _diamondsValueBlue = value; } }
+    public int DiaValueYellow { get { return _diamondsValueYellow; } set { _diamondsValueYellow = value; } }
     public static CharacterCollisions _instance;
     Events _events;
 
@@ -28,10 +31,13 @@ public class CharacterCollisions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         _health = PlayerPrefs.GetInt("health", 3);
         _healthTxt.text = _health.ToString();
+
        _events = Events._instance;
         characterController = CharacterController._instance;
+
         _events.onTriggerColllectDiamonds += OnCollectDiamonds;
         _events.damageHealth += HealthDecrease;
     }
@@ -104,6 +110,7 @@ public class CharacterCollisions : MonoBehaviour
         if (other.tag=="diamonds")
         {
             other.gameObject.SetActive(false);
+            _diamondsValueBlue= PlayerPrefs.GetInt("diaBlue",1);
             _events.TriggerCollectDiamonds(_diamondsValueBlue);
             print(characterController.DiamondsCount);
         }
@@ -111,6 +118,7 @@ public class CharacterCollisions : MonoBehaviour
         {
            
             other.gameObject.SetActive(false);
+            _diamondsValueYellow= PlayerPrefs.GetInt("diaYellow",2);
             _events.TriggerCollectDiamonds(_diamondsValueYellow);
             print(characterController.DiamondsCount);
         }
