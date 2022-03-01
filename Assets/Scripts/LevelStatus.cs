@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LevelStatus : MonoBehaviour
 {
     int _currentLevel = 1;
-    [SerializeField] Text levelTxt;
+    [SerializeField] Text levelTxt, lvlTxtTop;
     private string _level = "LEVEL ";
     public static LevelStatus _instance;
 
@@ -23,6 +23,7 @@ public class LevelStatus : MonoBehaviour
         _currentLevel = PlayerPrefs.GetInt("currentLevel",1);
     
         levelTxt.text = _level+_currentLevel.ToString();
+        lvlTxtTop.text = _level + _currentLevel.ToString();
     }
 
 }

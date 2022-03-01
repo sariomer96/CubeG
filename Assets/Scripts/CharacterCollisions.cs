@@ -7,8 +7,11 @@ public class CharacterCollisions : MonoBehaviour
 {
     bool isFinished = false;
 
+    [SerializeField] ParticleSystem _hitParticle, _collectParticleBlue, _collectParticleYellow;
+    [SerializeField] GameObject _confetti;
     [SerializeField] UIController uiController;
     [SerializeField] Camera cam;
+    [SerializeField] Text goldTxtOnLeft,endingCurrentGoldTxt,endingTotalTxt;
     [SerializeField] Vector3 finishCamPos;
     [SerializeField] Vector3 finishCamRot;
     [SerializeField] public Text _healthTxt,_remainingTxt;
@@ -71,20 +74,25 @@ public class CharacterCollisions : MonoBehaviour
     private void OnCollectDiamonds(int diamondsValue)
     {
         characterController.DiamondsCount+=diamondsValue;
+        goldTxtOnLeft.text = characterController.DiamondsCount.ToString();
+
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag=="Finish")
         {
+            _confetti.SetActive(true);
+          
             uiController.WinUi();
             int getMoney = PlayerPrefs.GetInt("money");
             CoinStatus._instance.Money = characterController.DiamondsCount;
+            endingCurrentGoldTxt.text = characterController.DiamondsCount.ToString();
             PlayerPrefs.SetInt("money", getMoney + CoinStatus._instance.Money);
             int totalMoney = PlayerPrefs.GetInt("money");
             CoinStatus._instance.moneyTxt.text = CoinStatus._instance.totalCoin+ totalMoney.ToString();
+            endingTotalTxt.text = CoinStatus._instance.totalCoin + totalMoney.ToString();
 
-
-           isFinished = true;
+            isFinished = true;
             characterController.SetSpeed(0);
             characterController.canSwerve = false;
             characterController.GetAnim().SetBool("isWin", true);
@@ -96,6 +104,9 @@ public class CharacterCollisions : MonoBehaviour
     {
         if (other.tag=="obstacle")
         {
+           
+                _hitParticle.Play();
+            
             StartCoroutine(RespawnCharacter());
             _events.DamageHealth();
             characterController.canSwerve = false;
@@ -109,6 +120,7 @@ public class CharacterCollisions : MonoBehaviour
         }
         if (other.tag=="diamonds")
         {
+            _collectParticleBlue.Play();
             other.gameObject.SetActive(false);
             _diamondsValueBlue= PlayerPrefs.GetInt("diaBlue",1);
             _events.TriggerCollectDiamonds(_diamondsValueBlue);
@@ -116,7 +128,7 @@ public class CharacterCollisions : MonoBehaviour
         }
         if (other.tag=="diamondsYellow")
         {
-           
+            _collectParticleYellow.Play();
             other.gameObject.SetActive(false);
             _diamondsValueYellow= PlayerPrefs.GetInt("diaYellow",2);
             _events.TriggerCollectDiamonds(_diamondsValueYellow);
@@ -137,6 +149,7 @@ public class CharacterCollisions : MonoBehaviour
         else
         {
             uiController.LoseUi();
+            endingCurrentGoldTxt.text = characterController.DiamondsCount.ToString();
         }
       
     }
