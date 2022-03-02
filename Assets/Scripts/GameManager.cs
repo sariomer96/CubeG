@@ -16,8 +16,7 @@ public class GameManager : MonoBehaviour
 
     void TapToPlay()
     {
-       
-     
+        
         if (Input.GetMouseButtonDown(0)&&!_isStart&&!EventSystem.current.currentSelectedGameObject)
         {
             tapToPlay.SetActive(false);
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour
             _isStart = true;
         }
     }
-    // Update is called once per frame
+  
     void Update()
     {
         TapToPlay();

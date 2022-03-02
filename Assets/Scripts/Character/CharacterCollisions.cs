@@ -11,10 +11,11 @@ public class CharacterCollisions : MonoBehaviour
     [SerializeField] GameObject _confetti;
     [SerializeField] UIController uiController;
     [SerializeField] Camera cam;
-    [SerializeField] Text goldTxtOnLeft,endingCurrentGoldTxt,endingTotalTxt;
+    [SerializeField] Text goldTxtOnLeft,endingCurrentGoldTxt,endingTotalTxt,loseCurrentGoldTxt;
     [SerializeField] Vector3 finishCamPos;
     [SerializeField] Vector3 finishCamRot;
     [SerializeField] public Text _healthTxt,_remainingTxt;
+
     int _remaining = 3;
     CharacterController characterController;
     [SerializeField] private int _health = 3;
@@ -49,6 +50,7 @@ public class CharacterCollisions : MonoBehaviour
     {
         FinishCamView(isFinished);
     }
+
     void FinishCamView(bool isFinished)
     {
         if (isFinished==true)
@@ -59,10 +61,10 @@ public class CharacterCollisions : MonoBehaviour
         }
 
     }
+
     private void HealthDecrease()
     {
        
-
         if (_health>0)
         {
             _health--;
@@ -71,12 +73,14 @@ public class CharacterCollisions : MonoBehaviour
         }
      
     }
+
     private void OnCollectDiamonds(int diamondsValue)
     {
         characterController.DiamondsCount+=diamondsValue;
         goldTxtOnLeft.text = characterController.DiamondsCount.ToString();
 
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag=="Finish")
@@ -97,15 +101,15 @@ public class CharacterCollisions : MonoBehaviour
             characterController.canSwerve = false;
             characterController.GetAnim().SetBool("isWin", true);
           
-
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag=="obstacle")
         {
            
-                _hitParticle.Play();
+            _hitParticle.Play();
             
             StartCoroutine(RespawnCharacter());
             _events.DamageHealth();
@@ -118,6 +122,7 @@ public class CharacterCollisions : MonoBehaviour
          
             other.enabled = false;
         }
+
         if (other.tag=="diamonds")
         {
             _collectParticleBlue.Play();
@@ -126,6 +131,7 @@ public class CharacterCollisions : MonoBehaviour
             _events.TriggerCollectDiamonds(_diamondsValueBlue);
             print(characterController.DiamondsCount);
         }
+
         if (other.tag=="diamondsYellow")
         {
             _collectParticleYellow.Play();
@@ -149,10 +155,11 @@ public class CharacterCollisions : MonoBehaviour
         else
         {
             uiController.LoseUi();
-            endingCurrentGoldTxt.text = characterController.DiamondsCount.ToString();
+            loseCurrentGoldTxt.text = characterController.DiamondsCount.ToString();
         }
       
     }
+
     IEnumerator RemainingCounter()
     {
         

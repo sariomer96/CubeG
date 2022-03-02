@@ -9,6 +9,7 @@ public class ScaleModifier : MonoBehaviour
     public bool repeatable;
     public float speed = 2f;
     public float duration = 5f;
+
     IEnumerator Start()
     {
         minScale = transform.localScale;

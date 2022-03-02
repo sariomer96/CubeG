@@ -19,13 +19,13 @@ public class CharacterController : MonoBehaviour
     [SerializeField] Vector3 move;
     [SerializeField] float poolTriggerZ;
     ObjectPool objPool;
-    Rigidbody rb;
+
     int poolSize = 0;
     int activeObjCount = 0;
     int typeCount = 0;
     [SerializeField] private Animator _anim;
    
-    float swerveAmount;
+  
     float lastPosX;
     float moveX;
     private string _idleAnim = "idle";
@@ -47,11 +47,10 @@ public class CharacterController : MonoBehaviour
     {
       
         _anim.Play(_idleAnim);
+
         objPool = ObjectPool._instance;
         typeCount = objPool.GetPoolTypeCount();
        
-        rb = transform.GetComponent<Rigidbody>();
-
         ObjectCreate();
 
 
@@ -61,14 +60,12 @@ public class CharacterController : MonoBehaviour
     {
         return _anim;
     }
+
    void CharacterMove()
     {
         if (Input.GetMouseButtonDown(0))
         {
-
             lastPosX = Input.mousePosition.x;
-
-
         }
 
         else if (Input.GetMouseButton(0))
@@ -78,7 +75,6 @@ public class CharacterController : MonoBehaviour
 
             lastPosX = Input.mousePosition.x;
 
-
         }
 
         else if (Input.GetMouseButtonUp(0))
@@ -86,34 +82,25 @@ public class CharacterController : MonoBehaviour
             moveX = 0f;
 
         }
+
         if (canSwerve==true&&GameManager._instance._isStart==true)
         {
             float swerveAmount = moveX * Time.deltaTime * swerveSpeed;
-
-
-           
-
+          
             transform.Translate(swerveAmount, 0, _speed * Time.deltaTime);
-
-
             transform.position = new Vector3(Mathf.Clamp(transform.position.x, -ClampX, ClampX), transform.position.y, transform.position.z);
         }
        
-
     }
     // Update is called once per frame
     void Update()
     {
-        CharacterMove();
-        
-
-
+        CharacterMove();       
     }
    
     void ObjectCreate()
     {
         typeCount = objPool.GetPoolTypeCount();
-
 
         for (int j = 0; j < typeCount; j++)
         {
@@ -134,6 +121,7 @@ public class CharacterController : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "cube")
@@ -152,7 +140,6 @@ public class CharacterController : MonoBehaviour
             }
          
             ObjectCreate();
-
 
         }
     }

@@ -18,24 +18,27 @@ public class Improve : MonoBehaviour
     {
         _healthMButton.interactable = false;
         _earnMButton.interactable = false;
+
         PlayerPrefs.SetInt("money", 150);
         CoinStatus._instance.MoneyToString();
         PlayerPrefs.SetInt("healthMoney", 10);
         PlayerPrefs.SetInt("earningMoney", 10);
+
         int healthMoney = PlayerPrefs.GetInt("healthMoney",10);
         int earnMoney = PlayerPrefs.GetInt("earningMoney",10);
+
         ButtonInteractable(earnMoney, _earnMButton);
         ButtonInteractable(healthMoney, _healthMButton);
 
         SetText();
-
-   
     }
+
     void SetText()
     {
         _healthMoneyTxt.text = PlayerPrefs.GetInt("healthMoney",10).ToString();
         _earningMoneyTxt.text = PlayerPrefs.GetInt("earningMoney",10).ToString();
     }
+
     void ButtonInteractable(int value,Button improveBtn)
     {
         int totalMoney = PlayerPrefs.GetInt("money", 0);
@@ -78,6 +81,7 @@ public class Improve : MonoBehaviour
         CharacterCollisions._instance.Health = health;
         CharacterCollisions._instance._healthTxt.text = health.ToString();
     }
+
     public void DiamondsValueIncrease()
     {
         int diaBlue=PlayerPrefs.GetInt("diaBlue", 1);
@@ -88,9 +92,7 @@ public class Improve : MonoBehaviour
         PlayerPrefs.SetInt("diaBlue", diaBlue);
         PlayerPrefs.SetInt("diaYellow", diaYellow);
     }
-    private void Update()
-    {
-      
-    }
+
+
 
 }

@@ -20,6 +20,7 @@ public class ObjectPool : MonoBehaviour
     }
     public static ObjectPool _instance;
 
+    [SerializeField] Transform objectPoolParent;
     [SerializeField] private Pool[] pools = null;
     // Start is called before the first frame update
 
@@ -29,6 +30,7 @@ public class ObjectPool : MonoBehaviour
         pools[type].objectPos = new Vector3(pools[type].posX, pools[type].posY, pools[type].posZ);
         return pools[type].objectPos;
     }
+
     public void GetRandomX(int type)
     {
        
@@ -36,15 +38,12 @@ public class ObjectPool : MonoBehaviour
        pools[type].posX = rand;
 
     }
-   
-
-    
+     
     
     public void IncreasePosZ(int type)
     {
         pools[type].posZ += pools[type].incDist;
         
-
     }
     private void Awake()
     {
@@ -54,7 +53,7 @@ public class ObjectPool : MonoBehaviour
             pools[i].pooledObjects = new Queue<GameObject>();
             for (int j = 0; j < pools[i].poolSize; j++)
             {
-                GameObject obj = Instantiate(pools[i].objectPrefab);
+                GameObject obj = Instantiate(pools[i].objectPrefab, objectPoolParent.transform);
                 obj.SetActive(false);
 
                 pools[i].pooledObjects.Enqueue(obj);
@@ -92,7 +91,7 @@ public class ObjectPool : MonoBehaviour
     {   
         for (int i = 0; i <amount; i++)
         {
-            GameObject obj = Instantiate(pools[objType].objectPrefab);
+            GameObject obj = Instantiate(pools[objType].objectPrefab, objectPoolParent.transform);
             obj.SetActive(false);
             pools[objType].pooledObjects.Enqueue(obj);
         }
